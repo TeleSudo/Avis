@@ -27,8 +27,11 @@ Install RoBot It Self
 
 git clone https://github.com/TeleSudo/Avis.git
 chmod +x Run.sh
-./Run.sh install
-./Run.sh A -- For Run
+./Run.sh install -- Install
+./Run.sh C -- Config
+./Run.sh S -- Screen
+./Run.sh A -- For AutoLaunch
+./Run.sh R -- Run Normal Withou Auto Or Screen !
 ```
 
 You Need To Add Your Info To Config.lua
