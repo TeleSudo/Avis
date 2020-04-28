@@ -31,12 +31,20 @@ Install RoBot It Self
 
 git clone https://github.com/TeleSudo/Avis.git
 chmod +x Run.sh
-./Run.sh install -- Install
-./Run.sh C -- Config
-./Run.sh S -- Screen
-./Run.sh A -- For AutoLaunch
-./Run.sh R -- Run Normal Withou Auto Or Screen !
+./Run.sh
+
+Then : 
+What can I do for you ?!
+1) Install Bot          2) Config Bot
+3) Start Auto Launch    4) Normal Launch
+5) Normal Launch (with screen)
+Input your choice number :
+
+First Input 1 For Install Then You Need To Send 2 For Config
+Then Edit Config.lua
+And In The End Send 3
 ```
 
 You Need To Add Your Info To Config.lua
+
 شما نیازدارید مشخصات خود را در فایل کانفیگ دات لوا بارگذاری کنید -- Config.lua
