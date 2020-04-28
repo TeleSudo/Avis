@@ -1,8 +1,8 @@
 # Avis RoBo | ای ویس ربات
 
-## By 🇮🇷 LuaError 🇮🇷 Team
-# [Channel](https://t.me/LuaError)  🇮🇷
-# [Group](https://t.me/LuaErrorTM)  🇮🇷
+## By 📍 LuaError Team 📍
+# [Channel](https://t.me/LuaError)  📍
+# [Group](https://t.me/LuaErrorTM)  📍
 
 ♦️ A Telegram AntiSpam RoBot Base On [LuaGram](https://github.com/Luagram/LuagramProject)
 
