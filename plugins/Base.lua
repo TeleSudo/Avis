@@ -2,7 +2,6 @@
 function run(msg)
 if msg.message then
 local msg = msg.message
-app.vardump(msg)
 if msg.content.luagram == 'messageChatAddMembers' then
 if app.in_array(msg.content.member_user_ids, app.getMe().id) then
 app.sendText(msg.chat_id,msg.id,'𝐏𝐥𝐞𝐚𝐬𝐞 𝐀𝐝𝐦𝐢𝐧 𝐌𝐞 𝐅𝐢𝐫𝐬𝐭 𝐓𝐨 𝐔𝐬𝐞 𝐌𝐞.\nلطفا من را ادمین کنید')
