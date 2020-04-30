@@ -2,6 +2,7 @@
 function run(msg)
 if msg.message then
 local msg = msg.message
+if app.chat_type(msg.chat_id) == 'is_supergroup'  then
 if msg.content.luagram == 'messageChatAddMembers' then
 if app.in_array(msg.content.member_user_ids, app.getMe().id) then
 app.sendText(msg.chat_id,msg.id,'𝐏𝐥𝐞𝐚𝐬𝐞 𝐀𝐝𝐦𝐢𝐧 𝐌𝐞 𝐅𝐢𝐫𝐬𝐭 𝐓𝐨 𝐔𝐬𝐞 𝐌𝐞.\nلطفا من را ادمین کنید')
@@ -574,6 +575,13 @@ end
 end
 end
 end--- Reply
+end -- Is_Supergroup
+if app.chat_type(msg.chat_id) == 'is_private' then
+if text:match('^/[Ss][Tt][Aa][Rr][Tt]$') then
+app.sendText(msg.chat_id,msg.id,'سلام من یک ربات آنتی اسپم رایگان هستم /n مرا به گروه خود اد کن')
+end
+end
+
 end --msg.content.text
 end --msg.message
 end --Function
