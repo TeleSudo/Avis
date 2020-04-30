@@ -2,6 +2,7 @@
 function run(msg)
 if msg.message then
 local msg = msg.message
+if app.chat_type(msg.chat_id) == 'is_supergroup'  then
 
 if msg.content.luagram == 'messageChatJoinByLink' or msg.content.luagram == 'messageChatAddMembers' then
 if db:get(msg.chat_id..'Lock:TgService') == 'yes' then
@@ -149,6 +150,7 @@ app.setChatMemberStatus(msg.chat_id,msg.sender_user_id,'banned')
 end
 end
 end -- Rank
+end -- Is_Supergroup
 end
 end
 return {
