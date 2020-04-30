@@ -2,6 +2,7 @@
 function run (msg)
 if msg.message then
 local msg = msg.message
+if app.chat_type(msg.chat_id) == 'is_supergroup'  then
 --------------
 if msg.content.luagram == 'messageSticker' then
 db:incr(msg.chat_id..'Sticker:Num'..msg.sender_user_id)
@@ -53,6 +54,7 @@ print(gpinfo.member_count)
 app.sendText(msg.chat_id,msg.id,'❕Your Group Info \n♦️Group ID :'..msg.chat_id..'\n♦️Number Of Member :'..gpinfo.member_count..'\n♦️Number Of Admin :'..gpinfo.administrator_count..'\n♦️Ban Number :'..gpinfo.banned_count..'\n♦️Group Info :'..gpinfo.description)
 end
 end
+end -- Is_Supergroup
 end
 end
   return {
