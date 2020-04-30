@@ -3,6 +3,7 @@ local function main(update)
 if update.message then
 local msg = update.message
 if msg.content.text then
+if app.chat_type(msg.chat_id) == 'is_supergroup'  then
 local input = msg.content.text.text
 local text = (input or '')
 if rank(msg.sender_user_id,msg.chat_id) <= 4 then
@@ -52,6 +53,7 @@ data = {
 app.sendText(msg.chat_id, msg.id, '🇮🇷 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐓𝐨 𝐑𝐨𝐛𝐨𝐭 𝐇𝐞𝐥𝐩 𝐏𝐚𝐧𝐞𝐥\n 𝐘𝐨𝐮 𝐂𝐚𝐧 𝐒𝐞𝐞 𝐇𝐞𝐥𝐩 𝐅𝐨𝐫 𝐑𝐨𝐛𝐨𝐭 𝐖𝐢𝐭𝐡 𝐓𝐡𝐢𝐬 𝐏𝐚𝐧𝐞𝐥', 'html', false, false, false, false, reply_markup)
 end
 end -- Rank
+end -- Is_Supergroup
 end
 end
 end
