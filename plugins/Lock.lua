@@ -1,6 +1,7 @@
 -- By @Abolfazl_le / @LuaError
 function run(msg)
 if msg.message then
+if app.chat_type(msg.chat_id) == 'is_supergroup'  then
 local msg = msg.message
 local UserInfo = app.getUser(msg.sender_user_id)
 if msg.content.text then
@@ -316,7 +317,7 @@ end
 end
 end
 -----AUDIO
-if text2:match('^[Aa][Uu][Dd][Ii][Oo]$') or text2:match('^آهنگ$') then
+if text2:match('^[Aa][Uu][Dd][Ii][Oo]$') or text2:match('^اهنگ$') then
 if db:get(msg.chat_id..'Lock:Audio') == 'yes' then
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'📍ʟᴏᴄᴋ ᴀᴜᴅɪᴏ ɪꜱ ᴀʟʀᴇᴀᴅʏ ᴀᴄᴛɪᴠᴇ!\n👤ᴄᴏᴍᴍᴀɴᴅ ʙʏ '..UserInfo.first_name)
@@ -324,7 +325,7 @@ else
 app.sendText(msg.chat_id,msg.id,'📍قفل آهنگ از قبل فعال بود!\n👤ارسال دستور توسط '..UserInfo.first_name)
 end
 else
-db:set(msg.chat_id..'Lock:Voice','yes')
+db:set(msg.chat_id..'Lock:Audio','yes')
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'📍ʟᴏᴄᴋ ᴀᴜᴅɪᴏ ɪꜱ ᴀᴄᴛɪᴠᴇ ɴᴏᴡ!\n👤ᴄᴏᴍᴍᴀɴᴅ ʙʏ '..UserInfo.first_name)
 else
@@ -870,6 +871,7 @@ end
 end
 end -- End OF UNLOCK
 end -- Rank
+end -- Is_Supergroup
 end
 end
 end
