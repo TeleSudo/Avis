@@ -7,7 +7,9 @@
  
  You Can Use [BotFather](https://t.me/Botfather) To Create Telegram Robot And Get Token For Run This Source On That Token!
  
- Dont Forget To STAR Us
+ Dont Forget To Give Us A Star
+ 
+ [TeleAvis Channel For News And Update](https://t.me/TeleAvis)
 
 # Install Robot | نصب ربات
 
