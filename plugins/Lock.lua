@@ -751,7 +751,7 @@ end
 end
 end
 -----AUDIO
-if text2:match('^[Aa][Uu][Dd][Ii][Oo]$') or text2:match('^آهنگ$') then
+if text2:match('^[Aa][Uu][Dd][Ii][Oo]$') or text2:match('^اهنگ$') then
 if db:get(msg.chat_id..'Lock:Audio') == 'no' then
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'📍ʟᴏᴄᴋ ᴀᴜᴅɪᴏ ɪꜱ ᴀʟʀᴇᴀᴅʏ ᴅᴇᴀᴄᴛɪᴠᴇ!\n👤ᴄᴏᴍᴍᴀɴᴅ ʙʏ '..UserInfo.first_name)
@@ -759,7 +759,7 @@ else
 app.sendText(msg.chat_id,msg.id,'📍قفل آهنگ از قبل غیرفعال بود!\n👤ارسال دستور توسط '..UserInfo.first_name)
 end
 else
-db:set(msg.chat_id..'Lock:Voice','no')
+db:set(msg.chat_id..'Lock:Audio','no')
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'📍ʟᴏᴄᴋ ᴀᴜᴅɪᴏ ɪꜱ ᴅᴇᴀᴄᴛɪᴠᴇ ɴᴏᴡ!\n👤ᴄᴏᴍᴍᴀɴᴅ ʙʏ '..UserInfo.first_name)
 else
