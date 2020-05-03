@@ -1,4 +1,4 @@
--- By @Abolfazl_le / @LuaError
+-- By @Abolfazl_le / @LuaError 
 function run(msg)
 if msg.message then
 if app.chat_type(msg.chat_id) == 'is_supergroup'  then
