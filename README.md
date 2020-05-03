@@ -29,9 +29,7 @@ make install
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 sudo ldconfig
 ```
-▫️
 2️⃣
-▫️
 ```
 Install RoBot It Self
 
@@ -50,7 +48,6 @@ First Input 1 For Install Then You Need To Send 2 For Config
 Then Edit Config.lua
 And At The End Send 3
 ```
-▫️
 
 # By LuaError Team
 
