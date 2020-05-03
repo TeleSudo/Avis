@@ -1,9 +1,5 @@
 # Avis RoBo | ای ویس ربات
 
-## By 📍 LuaError Team 📍
-# [Channel](https://t.me/LuaError)  📍
-# [Group](https://t.me/LuaErrorTM)  📍
-
 ♦️ A Telegram AntiSpam RoBot Base On [LuaGram](https://github.com/Luagram/LuagramProject)
 
 # Install Robot | نصب ربات
@@ -49,6 +45,14 @@ And At The End Send 3
 ```
 ▫️
 
-🔸You Need To Add Your Info To Config.lua
+# By LuaError Team
 
-🔸 شما نیازدارید مشخصات خود را در فایل کانفیگ دات لوا بارگذاری کنید
+[Channel](https://t.me/LuaError)  
+ [Group](https://t.me/LuaErrorTM)  
+
+# Dev 
+[Abolfazl Fallah](https://t.me/Abolfazl_le)  -- LuaError Founder
+
+# Special Thanks To
+[Milad Heydari](https://t.me/MilawdHeydari) -- LuaGram Dev  
+[Hosein Hesseini](https://t.me/HosseiN_HosseiNiM) -- Logo For Avis
