@@ -164,7 +164,7 @@ end
 end
 end
 -----LOCATION
-if text2:match('^[Ll][Oo][Cc][Aa][Tt][Ii][Oo][Nn]$') or text2:match('^ربات$') then
+if text2:match('^[Ll][Oo][Cc][Aa][Tt][Ii][Oo][Nn]$') or text2:match('^لوکیشن$') then
 if db:get(msg.chat_id..'Lock:Location') == 'yes' then
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'📍ʟᴏᴄᴋ ʟᴏᴄᴀᴛɪᴏɴ ɪꜱ ᴀʟʀᴇᴀᴅʏ ᴀᴄᴛɪᴠᴇ!\n👤ᴄᴏᴍᴍᴀɴᴅ ʙʏ '..UserInfo.first_name)
@@ -598,7 +598,7 @@ end
 end
 end
 -----LOCATION
-if text2:match('^[Ll][Oo][Cc][Aa][Tt][Ii][Oo][Nn]$') or text2:match('^ربات$') then
+if text2:match('^[Ll][Oo][Cc][Aa][Tt][Ii][Oo][Nn]$') or text2:match('^لوکیشن$') then
 if db:get(msg.chat_id..'Lock:Location') == 'no' then
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'📍ʟᴏᴄᴋ ʟᴏᴄᴀᴛɪᴏɴ ɪꜱ ᴀʟʀᴇᴀᴅʏ ᴅᴇᴀᴄᴛɪᴠᴇ!\n👤ᴄᴏᴍᴍᴀɴᴅ ʙʏ '..UserInfo.first_name)
