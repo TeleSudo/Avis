@@ -1,11 +1,13 @@
 # Avis RoBo | ای ویس ربات
 
-♦️ A Telegram AntiSpam RoBot Base On [LuaGram](https://github.com/Luagram/LuagramProject)
+ 
+Telegram AntiSpam RoBot Base On [LuaGram](https://github.com/Luagram/LuagramProject)
+
 
 # Install Robot | نصب ربات
 
 1️⃣
-▫️
+
 ``` 
 Install OpenSSL -- Note : You Need To Be On Root | نصب اپن اس اس ال  -- مهم حتما روی روت نصب شود
 
@@ -47,8 +49,8 @@ And At The End Send 3
 
 # By LuaError Team
 
-[Channel](https://t.me/LuaError)  
- [Group](https://t.me/LuaErrorTM)  
+[LuaError Telegram Channel](https://t.me/LuaError)  
+[LuaError Telegram Group](https://t.me/LuaErrorTM)  
 
 # Dev 
 [Abolfazl Fallah](https://t.me/Abolfazl_le)  -- LuaError Founder
