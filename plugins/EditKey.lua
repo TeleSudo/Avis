@@ -204,7 +204,7 @@ data = {
 }
 }
 }
-app.editMessageText(msg.chat_id, msg.message_id,  'All Vip Members Are : \n'..TextBan, 'html', false, false, reply_markup)
+app.editMessageText(msg.chat_id, msg.message_id,  'All Ban Members Are : \n'..TextBan, 'html', false, false, reply_markup)
 end
 ------------------------
 if callback == 'MuteList' and rank(msg.sender_user_id,msg.chat_id) <= 4 then
