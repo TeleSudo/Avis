@@ -28,7 +28,7 @@ case $Choice in
         mkdir tmp
         cd tmp
         git clone https://github.com/george0884/lua-curl-error && cd lua-curl-error && tar -xzvf curl.tar.gz && sudo cp curl -r /usr/include/ && cd .. && sudo rm -Rf lua-curl-error
-        wget http://luarocks.org/releases/luarocks-2.2.2.tar.gz
+        wget http://luarocks.org/releases/luarocks-2.2.2.tar.gz --no-check-certificate
         tar zxpf luarocks-2.2.2.tar.gz
         cd luarocks-2.2.2
         ./configure; sudo make bootstrap
