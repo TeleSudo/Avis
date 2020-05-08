@@ -5,7 +5,15 @@ local msg = msg.message
 if app.chat_type(msg.chat_id) == 'is_supergroup'  then
 if msg.content.luagram == 'messageChatAddMembers' then
 if app.in_array(msg.content.member_user_ids, app.getMe().id) then
-app.sendText(msg.chat_id,msg.id,'𝐏𝐥𝐞𝐚𝐬𝐞 𝐀𝐝𝐦𝐢𝐧 𝐌𝐞 𝐅𝐢𝐫𝐬𝐭 𝐓𝐨 𝐔𝐬𝐞 𝐌𝐞.\nلطفا من را ادمین کنید')
+local reply_markup = app.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '• تایید و شناسایی ادمین ها', data = 'AdminsConfig'} , {text = '• بستن', data = 'Close'}
+},
+}
+}
+app.sendText(msg.chat_id,msg.id,'𝐏𝐥𝐞𝐚𝐬𝐞 𝐀𝐝𝐦𝐢𝐧 𝐌𝐞 𝐅𝐢𝐫𝐬𝐭 𝐓𝐨 𝐔𝐬𝐞 𝐌𝐞.\nلطفا من را ادمین کنید','html', false, false, false, false, reply_markup)
 end 
 end
 if msg.content.luagram == 'messageChatAddMembers'or msg.content.luagram == 'messageChatJoinByLink' then
@@ -28,7 +36,8 @@ if msg.content.text then
 local input = msg.content.text.text
 local text = (input or '')
 -- SetLanguage
-if text:match("^[Ss][Ee][Tt][Ll][Aa][Nn][Gg] (.*)$") or text:match("^تنظیم زبان (.*)$") and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match("^[Ss][Ee][Tt][Ll][Aa][Nn][Gg] (.*)$") or text:match("^تنظیم زبان (.*)$") then
 local text2 = text:match("^[Ss][Ee][Tt][Ll][Aa][Nn][Gg] (.*)$") or text:match("^تنظیم زبان (.*)$")
 if text2:match("^[Pp][Ee][Rr][Ss][Ii][Aa][Nn]$") or text2:match('^فارسی$') then
 db:set(msg.chat_id..'Lang','FA')
@@ -48,6 +57,11 @@ else
 app.sendText(msg.chat_id,msg.id,'لطفا اول مرا ادمین کنید')
 end
 else
+if db:sismember('Robot:GroupList',msg.chat_id) then
+return
+else
+db:sadd('Robot:GroupList',msg.chat_id)
+end
 for i=1 , tonumber(gpinfo.administrator_count) do
 local UserID = app.getChatAdministrators(msg.chat_id)
 if UserID.administrators[i].is_owner == false then
@@ -64,7 +78,7 @@ end
 end
 end
 -- Filter
-if text:match('^[Ff][Ii][Ll][Tt][Ee][Rr] (.*)$') or text:match('^فیلتر (.*)$')  and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match('^[Ff][Ii][Ll][Tt][Ee][Rr] (.*)$') or text:match('^فیلتر (.*)$')  then
 local FilterText = text:match('^[Ff][Ii][Ll][Tt][Ee][Rr] (.*)$') or text:match('^فیلتر (.*)$') 
 if db:sismember(msg.chat_id..'Filter:Word',FilterText) then
 if db:get(msg.chat_id..'Lang') == 'EN' then
@@ -77,12 +91,12 @@ db:sadd(msg.chat_id..'Filter:Word',FilterText)
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'𝐖𝐨𝐫𝐝 '..FilterText..' 𝐀𝐝𝐞𝐝 𝐓𝐨 𝐅𝐢𝐥𝐭𝐞𝐫𝐋𝐢𝐬𝐭!')
 else
-app.sendText(msg.chat_id,msg.id,'کلمه '..FilterText..'به لیست فیلتر اضافه شد!')
+app.sendText(msg.chat_id,msg.id,'کلمه '..FilterText..' به لیست فیلتر اضافه شد!')
 end
 end
 end
 -- RemFilter
-if text:match('^[Rr][Ee][Mm][Ff][Ii][Ll][Tt][Ee][Rr] (.*)$') or text:match('^حذف فیلتر (.*)$')  and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match('^[Rr][Ee][Mm][Ff][Ii][Ll][Tt][Ee][Rr] (.*)$') or text:match('^حذف فیلتر (.*)$')  then
 local FilterText = text:match('^[Ff][Ii][Ll][Tt][Ee][Rr] (.*)$') or text:match('^حذف فیلتر (.*)$') 
 if not db:sismember(msg.chat_id..'Filter:Word',FilterText) then
 if db:get(msg.chat_id..'Lang') == 'EN' then
@@ -100,7 +114,7 @@ end
 end
 end
 -- SetWelcome
-if text:match('^[Ss][Ee][Tt][Ww][Ee][Ll][Cc][Oo][Mm][Ee] (.*)$') or text:match('^تنظیم خوشامدگویی (.*)$')  and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match('^[Ss][Ee][Tt][Ww][Ee][Ll][Cc][Oo][Mm][Ee] (.*)$') or text:match('^تنظیم خوشامدگویی (.*)$')then
 local WelcomeText = text:match('^[Ss][Ee][Tt][Ww][Ee][Ll][Cc][Oo][Mm][Ee] (.*)$')or text:match('^تنظیم خوشامدگویی (.*)$')
 db:set(msg.chat_id..'GpWelcome')
 if db:get(msg.chat_id..'Lang') =='EN' then
@@ -110,7 +124,7 @@ app.sendText(msg.chat_id,msg.id,'متن خوش آمدگویی ست شد :\n'..We
 end
 end
 -- Pin
-if text:match('^[Pp][Ii][Nn]*$') or text:match('^پین$')  and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match('^[Pp][Ii][Nn]*$') or text:match('^پین$')   then
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'𝐎𝐤 𝐌𝐞𝐬𝐬𝐚𝐠𝐞 𝐇𝐚𝐬 𝐁𝐞𝐞𝐧 𝐏𝐢𝐧𝐞𝐝!')
 else
@@ -119,7 +133,7 @@ end
 app.pinChatMessage(msg.chat_id,msg.reply_to_message_id)
 end
 -- Unpin
-if text:match('^[Uu][Nn][Pp][Ii][Nn]*$') or text:match('^حذف پین$')  and rank(msg.sender_user_id,msg.chat_id)<=4  then
+if text:match('^[Uu][Nn][Pp][Ii][Nn]*$') or text:match('^حذف پین$')  then
 if db:get(msg.chat_id..'Lang') == 'EN' then
 app.sendText(msg.chat_id,msg.id,'𝐎𝐤 𝐌𝐞𝐬𝐬𝐚𝐠𝐞 𝐇𝐚𝐬 𝐁𝐞𝐞𝐧 𝐔𝐧𝐏𝐢𝐧𝐞𝐝!')
 else
@@ -128,7 +142,7 @@ end
 app.unpinChatMessage(msg.chat_id)
 end
 -- Welcome
-if text:match('^[Ww][Ee][Ll][Cc][Oo][Mm][Ee] (.*)$') or text:match('^خوشامدگویی (.*)$')  and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match('^[Ww][Ee][Ll][Cc][Oo][Mm][Ee] (.*)$') or text:match('^خوشامدگویی (.*)$')  then
 local text2 = text:match('^[Ww][Ee][Ll][Cc][Oo][Mm][Ee] (.*)$') or text:match('^خوشامدگویی (.*)$')
 if text2:match('^[Oo][Nn]$') then
 if db:get(msg.chat_id..'Lang') =='EN' then
@@ -148,7 +162,7 @@ db:set(msg.chat_id..'Welcome:Status','Off')
 end
 end
 -- Ban
-if text:match('^[Bb][Aa][Nn] @(%S+)$') or text:match('^بن @(%S+)$') and rank(msg.sender_user_id,msg.chat_id)<=4then
+if text:match('^[Bb][Aa][Nn] @(%S+)$') or text:match('^بن @(%S+)$')then
 local UserName = text:match('^[Bb][Aa][Nn] @(%S+)$') or text:match('^بن @(%S+)$')
 local UserIDBan = app.searchPublicChat(UserName).id
 if rank(UserIDBan,msg.chat_id) <= 5 then
@@ -176,7 +190,7 @@ end
 end
 end
 -- UnBan
-if text:match('^[Uu][Nn][Bb][Aa][Nn] @(%S+)$') or text:match('^حذف بن @(%S+)$') and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match('^[Uu][Nn][Bb][Aa][Nn] @(%S+)$') or text:match('^حذف بن @(%S+)$')then
 local UserName = text:match('^[Uu][Nn][Bb][Aa][Nn] @(%S+)$') or text:match('^حذف بن @(%S+)$')
 local UserIDBan = app.searchPublicChat(UserName).id
 if rank(UserIDBan,msg.chat_id) <= 5 then
@@ -204,7 +218,7 @@ end
 end
 end
 -- Mute
-if text:match('^[Mm][Uu][Tt][Ee] @(%S+)$') or text:match('^سکوت @(%S+)$') and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match('^[Mm][Uu][Tt][Ee] @(%S+)$') or text:match('^سکوت @(%S+)$') then
 local UserName = text:match('^[Mm][Uu][Tt][Ee] @(%S+)$') or text:match('^سکوت @(%S+)$')
 local UserIDMute = app.searchPublicChat(UserName).id
 if rank(UserIDMute,msg.chat_id) <= 5 then
@@ -232,7 +246,7 @@ end
 end
 end
 -- UnMute
-if text:match('^[Uu][Nn][Mm][Uu][Tt][Ee] @(%S+)$') or text:match('^حذف سکوت @(%S+)$') and rank(msg.sender_user_id,msg.chat_id)<=4 then
+if text:match('^[Uu][Nn][Mm][Uu][Tt][Ee] @(%S+)$') or text:match('^حذف سکوت @(%S+)$') then
 local UserName = text:match('^[Uu][Nn][Mm][Uu][Tt][Ee] @(%S+)$') or text:match('^حذف سکوت @(%S+)$')
 local UserIDMute = app.searchPublicChat(UserName).id
 if rank(UserIDMute,msg.chat_id) <= 4 then
@@ -260,7 +274,7 @@ end
 end
 end
 -- VIP
-if text:match('^[Ss][Ee][Tt][Vv][Ii][Pp] @(%S+)$') or text:match('^ویژه @(%S+)$') and rank(msg.sender_user_id,msg.chat_id) <=4 then
+if text:match('^[Ss][Ee][Tt][Vv][Ii][Pp] @(%S+)$') or text:match('^ویژه @(%S+)$')  then
 local UserVipUsername = text:match('^[Ss][Ee][Tt][Vv][Ii][Pp] @(%S+)$') or text:match('^ویژه @(%S+)$')
 local UserIDV = app.searchPublicChat(UserVipUsername).id
 if rank(UserIDMute,msg.chat_id) <= 4 then
@@ -287,7 +301,7 @@ end
 end
 end
 -- RemVIP
-if text:match('^[Rr][Ee][Mm][Vv][Ii][Pp] @(%S+)$') or text:match('^حذف ویژه @(%S+)$') and rank(msg.sender_user_id,msg.chat_id) <=4 then
+if text:match('^[Rr][Ee][Mm][Vv][Ii][Pp] @(%S+)$') or text:match('^حذف ویژه @(%S+)$')  then
 local UserVipUsername = text:match('^[Rr][Ee][Mm][Vv][Ii][Pp] @(%S+)$') or text:match('^حذف ویژه @(%S+)$')
 local UserIDV = app.searchPublicChat(UserVipUsername).id
 if rank(UserIDMute,msg.chat_id) <= 4 then
@@ -341,7 +355,7 @@ end
 end
 end
 -- Demote
-if text:match('^[Dd][Ee][Mm][Oo][Tt][Ee] @(%S+)$') or text:match('^تنزل @(%S+)$') and rank(msg.sender_user_id,msg.chat_id) <=4 then
+if text:match('^[Dd][Ee][Mm][Oo][Tt][Ee] @(%S+)$') or text:match('^تنزل @(%S+)$')  then
 local UserName = text:match('^[Dd][Ee][Mm][Oo][Tt][Ee] @(%S+)$') or text:match('^تنزل @(%S+)$')
 local UserIDPromote = app.searchPublicChat(UserName).id
 if not db:sismember(config.session_name .. 'admins'.. msg.chat_id,UserIDPromote) then
@@ -437,11 +451,11 @@ app.sendText(msg.chat_id,msg.id,'کاربر '..UserIDMute..' ازقبل سکوت
 end
 else
 db:sadd(msg.chat_id..'Mute:Member',UserIDMute)
-app.setChatMemberStatus(msg.chat_id,UserIDMute,'restricted',{0,0,0,0,1,0,0,0,0})
+app.setChatMemberStatus(msg.chat_id,UserIDMute,'restricted',{1,0,0,0,0,0,0,0,0})
 if db:get(msg.chat_id..'Lang')=='EN'then
 app.sendText(msg.chat_id,msg.id,'𝐎𝐊 𝐔𝐬𝐞𝐫 @'..UserIDMute..' 𝐈𝐬 𝐌𝐮𝐭𝐞𝐝!')
 else
-app.sendText(msg.chat_id,msg.id,'کاربر @'..UserIDMute..' سکوت شد!')
+app.sendText(msg.chat_id,msg.id,'کاربر '..UserIDMute..' سکوت شد!')
 end
 end
 end
@@ -475,7 +489,7 @@ end
 end
 end
 -- VIP
-if text:match('^[Ss][Ee][Tt][Vv][Ii][Pp]') or text:match('^ویژه$') and rank(msg.sender_user_id,msg.chat_id) <=4 then
+if text:match('^[Ss][Ee][Tt][Vv][Ii][Pp]') or text:match('^ویژه$')  then
 local MSGSend = app.getMessage(msg.chat_id, msg.reply_to_message_id)
 local UserIDV = MSGSend.sender_user_id
 if rank(UserIDMute,msg.chat_id) <= 4 then
@@ -502,7 +516,7 @@ end
 end
 end
 -- RemVIP
-if text:match('^[Rr][Ee][Mm][Vv][Ii][Pp]$') or text:match('^حذف ویژه$') and rank(msg.sender_user_id,msg.chat_id) <=4 then
+if text:match('^[Rr][Ee][Mm][Vv][Ii][Pp]$') or text:match('^حذف ویژه$')  then
 local MSGSend = app.getMessage(msg.chat_id, msg.reply_to_message_id)
 local UserIDV = MSGSend.sender_user_id
 if rank(UserIDMute,msg.chat_id) <= 4 then
@@ -556,7 +570,7 @@ end
 end
 end
 -- Demote
-if text:match('^[Dd][Ee][Mm][Oo][Tt][Ee]$') or text:match('^تنزل$') and rank(msg.sender_user_id,msg.chat_id) <=4 then
+if text:match('^[Dd][Ee][Mm][Oo][Tt][Ee]$') or text:match('^تنزل$')  then
 local MSGSend = app.getMessage(msg.chat_id, msg.reply_to_message_id)
 local UserIDPromote = MSGSend.sender_user_id
 if not db:sismember(config.session_name .. 'admins'.. msg.chat_id,UserIDPromote) then
@@ -574,14 +588,10 @@ app.sendText(msg.chat_id,msg.id,'کاربر '..UserIDPromote..' تنزل پید�
 end
 end
 end
-end--- Reply
-end -- Is_Supergroup
-if app.chat_type(msg.chat_id) == 'is_private' then
-if text:match('^/[Ss][Tt][Aa][Rr][Tt]$') then
-app.sendText(msg.chat_id,msg.id,'سلام من یک ربات آنتی اسپم رایگان هستم /n مرا به گروه خود اد کن')
-end
-end
 
+end -- Reply
+end -- Rank
+end -- Is_Supergroup
 end --msg.content.text
 end --msg.message
 end --Function
