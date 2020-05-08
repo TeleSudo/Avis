@@ -715,8 +715,55 @@ app.editMessageText(msg.chat_id, msg.message_id, HelpMessage.HelpFunFA, 'html', 
 end
 end
 --------------------------------------------------------
+if callback == 'AdminsConfig'  then
+if db:sismember('Robot:GroupList',msg.chat_id) then
+return
+else
+db:sadd('Robot:GroupList',msg.chat_id)
+end
+local gpinfo = app.getSupergroupFullInfo(msg.chat_id)
+if gpinfo.administrator_count == 0 then
+if db:get(msg.chat_id..'Lang') == "EN" then
+app.sendText(msg.chat_id,msg.id,'𝐏𝐥𝐞𝐚𝐬𝐞 𝐀𝐝𝐦𝐢𝐧 𝐌𝐞 𝐅𝐢𝐫𝐬𝐭 𝐓𝐨 𝐔𝐬𝐞 𝐌𝐞!')
+else
+app.sendText(msg.chat_id,msg.id,'لطفا اول مرا ادمین کنید')
+end
+else
+for i=1 , tonumber(gpinfo.administrator_count) do
+local UserID = app.getChatAdministrators(msg.chat_id)
+if UserID.administrators[i].is_owner == false then
+db:sadd(config.session_name .. 'admins'.. msg.chat_id, UserID.administrators[i].user_id)
+else
+db:sadd(config.session_name .. 'owners'.. msg.chat_id, UserID.administrators[i].user_id)
+end
+end
+if db:get(msg.chat_id..'Lang') == "EN" then
+app.sendText(msg.chat_id,msg.id,'𝐀𝐥𝐥 𝐀𝐝𝐦𝐢𝐧𝐬 𝐍𝐨𝐰 𝐈𝐬 𝐒𝐞𝐭 . 𝐑𝐞𝐚𝐝𝐲 𝐓𝐨 𝐆𝐨!')
+else
+app.sendText(msg.chat_id,msg.id,'تمامی ادمین ها در ربات ست شدند')
+end
+end
+end
+----------------------------
 if callback == 'Support' and rank(msg.sender_user_id,msg.chat_id)<=4 then
-app.answerCallbackQuery(callback_query_id, 'Contact To @LuaErrorTM', show_alert)
+local reply_markup = app.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '• Add Me ➕ ', url = 'http://t.me/'..config.robot_username..'?startgroup=new'}
+},
+{
+{text = '• Channel ', url = 'http://t.me/'..config.channel} , {text = '• Owner ', url = 'http://t.me/'..config.o_username}
+},
+{
+{text = '• Support Group ', url = config.gplink}
+},
+{
+{text = 'Back',  data = 'Panel'},
+},
+}
+}
+app.editMessageText(msg.chat_id, msg.message_id, 'Welcome To Support', 'html', false, false, reply_markup)
 end
 end
 end	  
