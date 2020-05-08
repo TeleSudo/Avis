@@ -1,7 +1,42 @@
 -- By @Abolfazl_le / @LuaError
+HelpMessage = dofile('./data/Help.lua')
 local function main(update)
 if update.message then
 local msg = update.message
+if msg.content.luagram == 'messageSticker' then
+db:incr(msg.chat_id..'Sticker:Num')
+end
+--------------
+if msg.content.luagram == 'messagePhoto' then
+db:incr(msg.chat_id..'Photo:Num')
+end
+--------------
+if msg.content.luagram == 'messageVoiceNote' then
+db:incr(msg.chat_id..'Voice:Num')
+end
+--------------
+if msg.content.luagram == 'messageAnimation' then
+db:incr(msg.chat_id..'Gif:Num')
+end
+--------------
+if msg.content.luagram == 'messageVideo' then
+db:incr(msg.chat_id..'Video:Num')
+end
+--------------
+if msg.content.luagram == 'messageChatAddMembers' or  msg.content.luagram == 'messageChatJoinByLink' then
+db:incr(msg.chat_id..'Add:Num')
+end
+--------------
+if msg.content.luagram == 'messageChatDeleteMember' then
+db:incr(msg.chat_id..'Rem:Num')
+end
+--------------
+if msg.content.text then
+if msg.content.text.text then
+db:incr(msg.chat_id..'Text:Num')
+end
+end
+--------------
 if msg.content.text then
 if app.chat_type(msg.chat_id) == 'is_supergroup'  then
 local input = msg.content.text.text
@@ -52,8 +87,68 @@ data = {
 }
 app.sendText(msg.chat_id, msg.id, '🇮🇷 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐓𝐨 𝐑𝐨𝐛𝐨𝐭 𝐇𝐞𝐥𝐩 𝐏𝐚𝐧𝐞𝐥\n 𝐘𝐨𝐮 𝐂𝐚𝐧 𝐒𝐞𝐞 𝐇𝐞𝐥𝐩 𝐅𝐨𝐫 𝐑𝐨𝐛𝐨𝐭 𝐖𝐢𝐭𝐡 𝐓𝐡𝐢𝐬 𝐏𝐚𝐧𝐞𝐥', 'html', false, false, false, false, reply_markup)
 end
+if text:match('^[Ss][Tt][Aa][Tt][Uu][Ss]$') or text:match('^وضعیت$') then
+local TextNum = db:get(msg.chat_id..'Text:Num') or '0'
+local PhotoNum = db:get(msg.chat_id..'Photo:Num') or '0'
+local VideoNum = db:get(msg.chat_id..'Video:Num') or '0'
+local StickerNum = db:get(msg.chat_id..'Sticker:Num') or '0'
+local GifNum = db:get(msg.chat_id..'Gif:Num') or '0'
+local VoiceNum = db:get(msg.chat_id..'Voice:Num') or '0'
+local AddNum = db:get(msg.chat_id..'Add:Num') or '0'
+local DelNum = db:get(msg.chat_id..'Rem:Num') or '0'
+local reply_markup = app.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '• Text Number', data = 'TextNumber'}, {text =(TextNum),  data = 'TextNumberData'}
+},
+{
+{text = '• Photo Number', data = 'PhotoNumber'}, {text =(PhotoNum),  data = 'PhotoNumberData'}
+},
+{
+{text = '• Video Number', data = 'VideoNumber'}, {text =(VideoNum),  data = 'VideoNumberData'}
+},
+{
+{text = '• Sticker Number', data = 'StickerNumber'}, {text =(StickerNum),  data = 'StickerNumberData'}
+},
+{
+{text = '• Gif Number', data = 'GifNumber'}, {text =(GifNum),  data = 'GifNumberData'}
+},
+{
+{text = '• Voice Number', data = 'VoiceNumber'}, {text =(VoiceNum),  data = 'VoiceNumberData'}
+},
+{
+{text = '• New Add Member', data = 'AddNumber'}, {text =(AddNum),  data = 'AddNumberData'}
+},
+{
+{text = '• Left & Kicked Member', data = 'RemNumber'}, {text =(DelNum),  data = 'RemNumberData'}
+},
+{
+{text = '• Close', data = 'Close'},
+}
+}
+}
+app.sendText(msg.chat_id, msg.id, '🇮🇷 Welcome To Group Status', 'html', false, false, false, false, reply_markup)
+end 
 end -- Rank
-end -- Is_Supergroup
+if text:match('^[Ss][Hh][Ee][Ll][Pp]$') and rank(msg.sender_user_id,msg.chat_id) <=2 then
+local reply_markup = app.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '• Close', data = 'Close'}
+},
+}
+}
+if db:get(msg.chat_id..'Lang') == 'EN' then
+app.sendText(msg.chat_id, msg.id, HelpMessage.HelpSudoEN, 'html', false, false, false, false, reply_markup)
+else
+
+app.sendText(msg.chat_id, msg.id, HelpMessage.HelpSudoFA, 'html', false, false, false, false, reply_markup)
+end
+end
+
+end-- Is_Supergroup
 
 if msg.content.text then
 local input = msg.content.text.text
