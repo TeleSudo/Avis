@@ -2,33 +2,25 @@
 function run(msg)
 if msg.message then
 local msg = msg.message
-
 if app.chat_type(msg.chat_id) == 'is_supergroup' then
 local chat_id = msg.chat_id
-if db:sismember('supergroup',chat_id) then
-return 0
-else
+if not db:sismember('supergroup',chat_id) then
 db:sadd('supergroup',msg.chat_id)
 end
 elseif app.chat_type(msg.chat_id) == 'is_private' then
 local chat_id = msg.chat_id
-if db:sismember('pv',chat_id) then
-return 0
-else
+if not db:sismember('pv',chat_id) then
 db:sadd('pv',msg.chat_id)
 end
 else
 local chat_id = msg.chat_id
-if db:sismember('group',chat_id) then
-return 0
-else
+if not db:sismember('group',chat_id) then
 db:sadd('group',msg.chat_id)
 end
 end
-
 if app.chat_type(msg.chat_id) == 'is_supergroup'  then
 
-if msg.content.luagram == 'messageChatJoinByLink' or msg.content.luagram == 'messageChatAddMembers' or msg.content.luagram =='messageChatDeleteMember' then
+if msg.content.luagram == 'messageChatJoinByLink' or msg.content.luagram == 'messageChatAddMembers' then
 if db:get(msg.chat_id..'Lock:TgService') == 'yes' then
 app.deleteMessages(msg.chat_id,{[1]= msg.id})
 end
